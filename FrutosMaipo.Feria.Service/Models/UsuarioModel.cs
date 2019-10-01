@@ -15,6 +15,7 @@ namespace FrutosMaipo.Feria.Service.Models
         public string Vigencia { get; set; }
         public int? Contrato { get; set; }
         public int? Rol { get; set; }
+        
         //public ICollection<Solicitud> Solicitud { get; set; }
 
     }

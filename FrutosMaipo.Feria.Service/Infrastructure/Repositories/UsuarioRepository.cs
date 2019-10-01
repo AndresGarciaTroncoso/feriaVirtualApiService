@@ -18,7 +18,7 @@ namespace FrutosMaipo.Feria.Service.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<bool> CrearUsuarioDB(UsuarioModel usuario)
+        public async Task<bool> CrearUsuarioDB(Auth0UserModel usuario)
         {
             Usuario nuevoUsuario = new Usuario();
             nuevoUsuario.Rut = usuario.Rut;

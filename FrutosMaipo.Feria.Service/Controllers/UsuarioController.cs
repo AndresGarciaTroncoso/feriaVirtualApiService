@@ -49,16 +49,18 @@ namespace FrutosMaipo.Feria.Service.Controllers
         [Route("CreateUser")]
         public async Task<IActionResult> CreateUser([FromBody] Auth0UserModel UserAdd)
         {
-            return Ok(await _authUserManangementServices.CreateUser(UserAdd));
+            if (await _authUserManangementServices.CreateUser(UserAdd))
+            {
+                if(await _usuarioRepository.CrearUsuarioDB(UserAdd))
+                {
+                    return Ok(true);
+                }else
+                {
+                    return Ok(false);
+                }
+            }
+            else
+                return Ok(false);
         }
-
-        //[HttpPost]
-        //[Route("CreateUsers")]
-        //[ProducesResponseType((int)HttpStatusCode.OK)]
-        //public async Task<IActionResult> CrearUsuario()
-        //{
-        //    _creationProcess = Task.Run(() => _authUserManangementServices.CreateUsers());
-        //    return Ok();
-        //}
     }
 }
