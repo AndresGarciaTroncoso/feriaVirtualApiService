@@ -45,8 +45,40 @@ namespace FrutosMaipo.Feria.Service.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("ObtenerRoles")]
+        [ProducesResponseType(typeof(RolModel), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> ObtenerRoles()
+        {
+            IList<RolModel> rolList = await _usuarioRepository.ObtenerRoles();
+            if (rolList != null)
+            {
+                return Ok(rolList);
+            }
+            else
+            {
+                return BadRequest(false);
+            }
+        }
+
+        [HttpGet]
+        [Route("ObtenerClientes/{idRol}")]
+        [ProducesResponseType(typeof(ClienteModel), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> ObtenerClientes(int idRol)
+        {
+            IList<ClienteModel> clienteList = await _usuarioRepository.ObtenerClientes(idRol);
+            if (clienteList != null)
+            {
+                return Ok(clienteList);
+            }
+            else
+            {
+                return BadRequest(false);
+            }
+        }
+
         [HttpPost]
-        [Route("CreateUser")]
+        [Route("CreateUser")]  
         public async Task<IActionResult> CreateUser([FromBody] Auth0UserModel UserAdd)
         {
             if (await _authUserManangementServices.CreateUser(UserAdd))

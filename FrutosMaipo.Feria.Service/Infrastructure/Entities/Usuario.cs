@@ -7,7 +7,9 @@ namespace FrutosMaipo.Feria.Service.Infrastructure.Entities
     {
         public Usuario()
         {
-            Solicitud = new HashSet<Solicitud>();
+            Contrato = new HashSet<Contrato>();
+            Pedido = new HashSet<Pedido>();
+            Transporte = new HashSet<Transporte>();
         }
 
         public int Rut { get; set; }
@@ -15,11 +17,11 @@ namespace FrutosMaipo.Feria.Service.Infrastructure.Entities
         public string NombreCompleto { get; set; }
         public string Email { get; set; }
         public string Vigencia { get; set; }
-        public int? Contrato { get; set; }
         public int? Rol { get; set; }
 
-        public Contrato ContratoNavigation { get; set; }
         public Rol RolNavigation { get; set; }
-        public ICollection<Solicitud> Solicitud { get; set; }
+        public ICollection<Contrato> Contrato { get; set; }
+        public ICollection<Pedido> Pedido { get; set; }
+        public ICollection<Transporte> Transporte { get; set; }
     }
 }

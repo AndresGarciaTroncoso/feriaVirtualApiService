@@ -48,8 +48,8 @@ namespace FrutosMaipo.Feria.Service.Services
                     username = createUser.Username,
                     password = _auth0ManagementApiConfig.TemporaryPass,
                     user_metadata = new object { },
-                    email_verified = false,
-                    verify_email = false,
+                    email_verified = true,
+                    verify_email = true,
                     app_metadata = new object { },
                 });
 
@@ -80,7 +80,6 @@ namespace FrutosMaipo.Feria.Service.Services
         public async Task<bool> CreateUser(Auth0UserModel UserAdd)
         {
             ManagementApiResultModel responseToken = await GetAccessToken();
-            responseToken = await GetAccessToken();
             return await CreateUser(UserAdd, responseToken);
         }
         private async Task<ManagementApiResultModel> GetAccessToken()

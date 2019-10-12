@@ -26,7 +26,6 @@ namespace FrutosMaipo.Feria.Service.Infrastructure.Repositories
             nuevoUsuario.NombreCompleto = usuario.NombreCompleto;
             nuevoUsuario.Email = usuario.Email;
             nuevoUsuario.Vigencia = usuario.Vigencia;
-            nuevoUsuario.Contrato = usuario.Contrato;
             nuevoUsuario.Rol = usuario.Rol;
             await _context.Usuario.AddAsync(nuevoUsuario);
             return await _context.SaveChangesAsync() > 0 ? true : false;
@@ -47,7 +46,6 @@ namespace FrutosMaipo.Feria.Service.Infrastructure.Repositories
                         Rol = usuarioEntity.Rol,
                         NombreCompleto = usuarioEntity.NombreCompleto,
                         Email = usuarioEntity.Email,
-                        Contrato = usuarioEntity.Contrato,
                         Vigencia = usuarioEntity.Vigencia,
                     };
                     return usuario;
@@ -56,6 +54,54 @@ namespace FrutosMaipo.Feria.Service.Infrastructure.Repositories
 
             }
             catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public async Task<IList<ClienteModel>> ObtenerClientes(int idRol)
+        {
+            IList<ClienteModel> clienteList = new List<ClienteModel>();
+            ClienteModel clienteModel = null;
+            try
+            {
+                var usuarioResult = await _context.Usuario.Where(x => x.Rol == idRol).ToListAsync();
+                foreach (var item in usuarioResult)
+                {
+                    clienteModel = new ClienteModel()
+                    {
+                        idCliente = item.Rut,
+                        nombreCliente = item.NombreCompleto
+                    };
+                    clienteList.Add(clienteModel);
+                }
+                return clienteList;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public async Task<IList<RolModel>> ObtenerRoles()
+        {
+            IList<RolModel> rolList = new List<RolModel>();
+            RolModel rolModel = null;
+            try
+            {
+                var rolResult = await _context.Rol.ToListAsync();
+                foreach (var item in rolResult)
+                {
+                    rolModel = new RolModel()
+                    {
+                        IdRol = item.IdRol,
+                        Descripcion = item.Descripcion
+                    };
+                    rolList.Add(rolModel);
+                }
+                return rolList;
+            }
+            catch (Exception)
             {
                 return null;
             }
@@ -72,14 +118,14 @@ namespace FrutosMaipo.Feria.Service.Infrastructure.Repositories
 
                 if (rolEntity != null)
                 {
-                    List<FuncionRol> funcionRolEntity = await _context.FuncionRol.Where(x => x.Rol == idRol).ToListAsync();
-                    FuncionRol aux = await _context.FuncionRol
+                    //List<FuncionRol> funcionRolEntity = await _context.FuncionRol.Where(x => x.Rol == idRol).ToListAsync();
+
+                    List<FuncionRol> aux = await _context.FuncionRol
                         .Include(a => a.FuncionNavigation)
-                        .Include(b => b.FuncionNavigation.FuncionRol)
-                        .Include("FuncionNavigation.FuncionRol")
-                        .Where(c => c.Rol == idRol)
-                        .FirstOrDefaultAsync();
-                    foreach (var funcion in funcionRolEntity)
+                        .Include("FuncionNavigation")
+                        .Where(c => c.Rol == idRol).ToListAsync();
+
+                    foreach (var funcion in aux)
                     {
                         funcionModel = new FuncionModel()
                         {

@@ -12,5 +12,10 @@ namespace FrutosMaipo.Feria.Service.Infrastructure.Interfaces
         Task<bool> ActualizarProducto(ProductoModel producto);
         Task<bool> EliminarProducto(int idProducto);
         Task<ProductoModel> ProductoPorId(int idProducto);
+        Task<bool> InsertarProductoPedido(int idUsuario, int totalPedido, IList<ProductoPedidoModel> productoPedido);
+        Task<IList<DetallePedidoAsignadoModel>> ObtenerDetallePedidoAsignado(int idUsuario);
+        Task<IList<DetallePedidoAsignadoModel>> ObtenerProcesosDetallePorEstado(int idEstado);
+        Task<IList<ProductorProductoPedidoModel>> ObtenerProductosProveer(int idPedido);
+        Task<bool> AsignarProductorToProducto(ProductorToProductoModel productoPedido);
     }
 }

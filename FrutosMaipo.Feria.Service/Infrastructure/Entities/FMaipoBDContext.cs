@@ -17,7 +17,6 @@ namespace FrutosMaipo.Feria.Service.Infrastructure.Entities
 
         public virtual DbSet<Contrato> Contrato { get; set; }
         public virtual DbSet<Estado> Estado { get; set; }
-        public virtual DbSet<EstadoProcesoVenta> EstadoProcesoVenta { get; set; }
         public virtual DbSet<EstadoSubasta> EstadoSubasta { get; set; }
         public virtual DbSet<Funcion> Funcion { get; set; }
         public virtual DbSet<FuncionRol> FuncionRol { get; set; }
@@ -26,13 +25,14 @@ namespace FrutosMaipo.Feria.Service.Infrastructure.Entities
         public virtual DbSet<Producto> Producto { get; set; }
         public virtual DbSet<ProductoPedido> ProductoPedido { get; set; }
         public virtual DbSet<Rol> Rol { get; set; }
-        public virtual DbSet<Solicitud> Solicitud { get; set; }
         public virtual DbSet<Subasta> Subasta { get; set; }
+        public virtual DbSet<SubastaTransporte> SubastaTransporte { get; set; }
         public virtual DbSet<TipoEstado> TipoEstado { get; set; }
         public virtual DbSet<TipoVenta> TipoVenta { get; set; }
         public virtual DbSet<Transporte> Transporte { get; set; }
         public virtual DbSet<Transportista> Transportista { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
+        public virtual DbSet<Venta> Venta { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -49,9 +49,16 @@ namespace FrutosMaipo.Feria.Service.Infrastructure.Entities
             {
                 entity.HasKey(e => e.IdContrato);
 
-                entity.Property(e => e.FechaContrato).HasColumnType("date");
+                entity.Property(e => e.FechaInicioContrato).HasColumnType("date");
+
+                entity.Property(e => e.FechaTerminoContrato).HasColumnType("date");
 
                 entity.Property(e => e.Vigencia).HasMaxLength(10);
+
+                entity.HasOne(d => d.ProductorNavigation)
+                    .WithMany(p => p.Contrato)
+                    .HasForeignKey(d => d.Productor)
+                    .HasConstraintName("FK_Contrato_Usuario");
             });
 
             modelBuilder.Entity<Estado>(entity =>
@@ -68,33 +75,11 @@ namespace FrutosMaipo.Feria.Service.Infrastructure.Entities
                     .HasConstraintName("FK_Estado_TipoEstado");
             });
 
-            modelBuilder.Entity<EstadoProcesoVenta>(entity =>
-            {
-                entity.HasKey(e => e.IdEstadoProcesoVenta);
-
-                entity.Property(e => e.FechaEstado).HasColumnType("date");
-
-                entity.HasOne(d => d.EstadoNavigation)
-                    .WithMany(p => p.EstadoProcesoVenta)
-                    .HasForeignKey(d => d.Estado)
-                    .HasConstraintName("FK_EstadoProcesoVenta_Estado");
-
-                entity.HasOne(d => d.Estado1)
-                    .WithMany(p => p.EstadoProcesoVenta)
-                    .HasForeignKey(d => d.Estado)
-                    .HasConstraintName("FK_EstadoProcesoVenta_ProcesoVenta");
-            });
-
             modelBuilder.Entity<EstadoSubasta>(entity =>
             {
                 entity.HasKey(e => e.IdEstadoSubasta);
 
                 entity.Property(e => e.FechaEstado).HasColumnType("date");
-
-                entity.HasOne(d => d.EstadoNavigation)
-                    .WithMany(p => p.EstadoSubasta)
-                    .HasForeignKey(d => d.Estado)
-                    .HasConstraintName("FK_EstadoSubasta_Estado");
             });
 
             modelBuilder.Entity<Funcion>(entity =>
@@ -133,9 +118,12 @@ namespace FrutosMaipo.Feria.Service.Infrastructure.Entities
                     .HasMaxLength(150)
                     .IsUnicode(false);
 
-                entity.Property(e => e.FechaCreacion).HasColumnType("date");
-
                 entity.Property(e => e.Vigencia).HasMaxLength(10);
+
+                entity.HasOne(d => d.UsuarioNavigation)
+                    .WithMany(p => p.Pedido)
+                    .HasForeignKey(d => d.Usuario)
+                    .HasConstraintName("FK_Pedido_Usuario");
             });
 
             modelBuilder.Entity<ProcesoVenta>(entity =>
@@ -146,10 +134,15 @@ namespace FrutosMaipo.Feria.Service.Infrastructure.Entities
 
                 entity.Property(e => e.FechaTermino).HasColumnType("date");
 
-                entity.HasOne(d => d.SolicitudNavigation)
+                entity.HasOne(d => d.EstadoNavigation)
                     .WithMany(p => p.ProcesoVenta)
-                    .HasForeignKey(d => d.Solicitud)
-                    .HasConstraintName("FK_ProcesoVenta_Solicitud");
+                    .HasForeignKey(d => d.Estado)
+                    .HasConstraintName("FK_ProcesoVenta_Estado");
+
+                entity.HasOne(d => d.PedidoNavigation)
+                    .WithMany(p => p.ProcesoVenta)
+                    .HasForeignKey(d => d.Pedido)
+                    .HasConstraintName("FK_ProcesoVenta_Pedido");
 
                 entity.HasOne(d => d.TipoVentaNavigation)
                     .WithMany(p => p.ProcesoVenta)
@@ -198,23 +191,6 @@ namespace FrutosMaipo.Feria.Service.Infrastructure.Entities
                 entity.Property(e => e.Vigencia).HasMaxLength(10);
             });
 
-            modelBuilder.Entity<Solicitud>(entity =>
-            {
-                entity.HasKey(e => e.IdSolicitud);
-
-                entity.Property(e => e.FechaSolicitud).HasColumnType("date");
-
-                entity.HasOne(d => d.PedidoNavigation)
-                    .WithMany(p => p.Solicitud)
-                    .HasForeignKey(d => d.Pedido)
-                    .HasConstraintName("FK_Solicitud_Pedido");
-
-                entity.HasOne(d => d.UsuarioNavigation)
-                    .WithMany(p => p.Solicitud)
-                    .HasForeignKey(d => d.Usuario)
-                    .HasConstraintName("FK_Solicitud_Usuario");
-            });
-
             modelBuilder.Entity<Subasta>(entity =>
             {
                 entity.HasKey(e => e.IdSubasta);
@@ -228,6 +204,25 @@ namespace FrutosMaipo.Feria.Service.Infrastructure.Entities
                     .WithMany(p => p.Subasta)
                     .HasForeignKey(d => d.Tranportista)
                     .HasConstraintName("FK_Subasta_Transportista");
+            });
+
+            modelBuilder.Entity<SubastaTransporte>(entity =>
+            {
+                entity.HasKey(e => e.IdSubasta);
+
+                entity.Property(e => e.IdSubasta).ValueGeneratedNever();
+
+                entity.Property(e => e.Seleccionado).HasMaxLength(10);
+
+                entity.HasOne(d => d.EstadoNavigation)
+                    .WithMany(p => p.SubastaTransporte)
+                    .HasForeignKey(d => d.Estado)
+                    .HasConstraintName("FK_SubastaTransporte_Estado");
+
+                entity.HasOne(d => d.ProcesoVentaNavigation)
+                    .WithMany(p => p.SubastaTransporte)
+                    .HasForeignKey(d => d.ProcesoVenta)
+                    .HasConstraintName("FK_SubastaTransporte_ProcesoVenta");
             });
 
             modelBuilder.Entity<TipoEstado>(entity =>
@@ -257,6 +252,11 @@ namespace FrutosMaipo.Feria.Service.Infrastructure.Entities
                     .IsUnicode(false);
 
                 entity.Property(e => e.Refrigeracion).HasMaxLength(10);
+
+                entity.HasOne(d => d.TransportistaNavigation)
+                    .WithMany(p => p.Transporte)
+                    .HasForeignKey(d => d.Transportista)
+                    .HasConstraintName("FK_Transporte_Usuario");
             });
 
             modelBuilder.Entity<Transportista>(entity =>
@@ -272,11 +272,6 @@ namespace FrutosMaipo.Feria.Service.Infrastructure.Entities
                 entity.Property(e => e.NombreCompleto)
                     .HasMaxLength(150)
                     .IsUnicode(false);
-
-                entity.HasOne(d => d.TransporteNavigation)
-                    .WithMany(p => p.Transportista)
-                    .HasForeignKey(d => d.Transporte)
-                    .HasConstraintName("FK_Transportista_Transporte");
             });
 
             modelBuilder.Entity<Usuario>(entity =>
@@ -299,15 +294,24 @@ namespace FrutosMaipo.Feria.Service.Infrastructure.Entities
 
                 entity.Property(e => e.Vigencia).HasMaxLength(10);
 
-                entity.HasOne(d => d.ContratoNavigation)
-                    .WithMany(p => p.Usuario)
-                    .HasForeignKey(d => d.Contrato)
-                    .HasConstraintName("FK_Usuario_Contrato");
-
                 entity.HasOne(d => d.RolNavigation)
                     .WithMany(p => p.Usuario)
                     .HasForeignKey(d => d.Rol)
                     .HasConstraintName("FK_Usuario_Rol");
+            });
+
+            modelBuilder.Entity<Venta>(entity =>
+            {
+                entity.HasKey(e => e.IdVenta);
+
+                entity.Property(e => e.IdVenta).ValueGeneratedNever();
+
+                entity.Property(e => e.Pagado).HasMaxLength(10);
+
+                entity.HasOne(d => d.ProcesoVentaNavigation)
+                    .WithMany(p => p.Venta)
+                    .HasForeignKey(d => d.ProcesoVenta)
+                    .HasConstraintName("FK_Venta_ProcesoVenta");
             });
         }
     }

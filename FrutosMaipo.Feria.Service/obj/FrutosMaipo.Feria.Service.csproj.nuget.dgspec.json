@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Proyectos VS\\FeriaVirtual_Git\\feriaVirtualApiService\\FrutosMaipo.Feria.Service\\FrutosMaipo.Feria.Service.csproj": {}
+    "D:\\Proyectos VS\\Portafolio-FeriaVirtual\\feriaVirtualApiService\\FrutosMaipo.Feria.Service\\FrutosMaipo.Feria.Service.csproj": {}
   },
   "projects": {
-    "D:\\Proyectos VS\\FeriaVirtual_Git\\feriaVirtualApiService\\FrutosMaipo.Feria.Service\\FrutosMaipo.Feria.Service.csproj": {
+    "D:\\Proyectos VS\\Portafolio-FeriaVirtual\\feriaVirtualApiService\\FrutosMaipo.Feria.Service\\FrutosMaipo.Feria.Service.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Proyectos VS\\FeriaVirtual_Git\\feriaVirtualApiService\\FrutosMaipo.Feria.Service\\FrutosMaipo.Feria.Service.csproj",
+        "projectUniqueName": "D:\\Proyectos VS\\Portafolio-FeriaVirtual\\feriaVirtualApiService\\FrutosMaipo.Feria.Service\\FrutosMaipo.Feria.Service.csproj",
         "projectName": "FrutosMaipo.Feria.Service",
-        "projectPath": "D:\\Proyectos VS\\FeriaVirtual_Git\\feriaVirtualApiService\\FrutosMaipo.Feria.Service\\FrutosMaipo.Feria.Service.csproj",
+        "projectPath": "D:\\Proyectos VS\\Portafolio-FeriaVirtual\\feriaVirtualApiService\\FrutosMaipo.Feria.Service\\FrutosMaipo.Feria.Service.csproj",
         "packagesPath": "C:\\Users\\claud\\.nuget\\packages\\",
-        "outputPath": "D:\\Proyectos VS\\FeriaVirtual_Git\\feriaVirtualApiService\\FrutosMaipo.Feria.Service\\obj\\",
+        "outputPath": "D:\\Proyectos VS\\Portafolio-FeriaVirtual\\feriaVirtualApiService\\FrutosMaipo.Feria.Service\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\ProgramData\\Xamarin\\NuGet\\",

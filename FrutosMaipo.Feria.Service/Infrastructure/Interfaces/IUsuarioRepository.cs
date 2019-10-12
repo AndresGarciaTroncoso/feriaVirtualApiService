@@ -10,5 +10,7 @@ namespace FrutosMaipo.Feria.Service.Infrastructure.Interfaces
         Task<UsuarioModel> DetalleUsuarioPorId(int idUsuario);
         Task<RolFuncionModel> ObtenerRolYFunciones(int idRol);
         Task<bool> CrearUsuarioDB(Auth0UserModel usuario);
+        Task<IList<RolModel>> ObtenerRoles();
+        Task<IList<ClienteModel>> ObtenerClientes(int idRol);
     }
 }

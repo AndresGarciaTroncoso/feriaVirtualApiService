@@ -13,9 +13,7 @@ namespace FrutosMaipo.Feria.Service.Infrastructure.Entities
         public int Rut { get; set; }
         public string NombreCompleto { get; set; }
         public string Email { get; set; }
-        public int? Transporte { get; set; }
 
-        public Transporte TransporteNavigation { get; set; }
         public ICollection<Subasta> Subasta { get; set; }
     }
 }

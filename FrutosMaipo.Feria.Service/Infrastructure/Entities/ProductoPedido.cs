@@ -9,6 +9,7 @@ namespace FrutosMaipo.Feria.Service.Infrastructure.Entities
         public int? Pedido { get; set; }
         public int? Producto { get; set; }
         public double? Kilogramos { get; set; }
+        public int? Productor { get; set; }
 
         public Pedido PedidoNavigation { get; set; }
         public Producto ProductoNavigation { get; set; }

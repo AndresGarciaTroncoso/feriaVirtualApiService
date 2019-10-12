@@ -7,8 +7,8 @@ namespace FrutosMaipo.Feria.Service.Infrastructure.Entities
     {
         public Estado()
         {
-            EstadoProcesoVenta = new HashSet<EstadoProcesoVenta>();
-            EstadoSubasta = new HashSet<EstadoSubasta>();
+            ProcesoVenta = new HashSet<ProcesoVenta>();
+            SubastaTransporte = new HashSet<SubastaTransporte>();
         }
 
         public int IdEstado { get; set; }
@@ -16,7 +16,7 @@ namespace FrutosMaipo.Feria.Service.Infrastructure.Entities
         public int? TipoEstado { get; set; }
 
         public TipoEstado TipoEstadoNavigation { get; set; }
-        public ICollection<EstadoProcesoVenta> EstadoProcesoVenta { get; set; }
-        public ICollection<EstadoSubasta> EstadoSubasta { get; set; }
+        public ICollection<ProcesoVenta> ProcesoVenta { get; set; }
+        public ICollection<SubastaTransporte> SubastaTransporte { get; set; }
     }
 }
