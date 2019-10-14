@@ -38,3 +38,18 @@ D:\Proyectos VS\Portafolio-FeriaVirtual\feriaVirtualApiService\FrutosMaipo.Feria
 D:\Proyectos VS\Portafolio-FeriaVirtual\feriaVirtualApiService\FrutosMaipo.Feria.Service\obj\Debug\netcoreapp2.1\FrutosMaipo.Feria.Service.RazorTargetAssemblyInfo.cache
 D:\Proyectos VS\Portafolio-FeriaVirtual\feriaVirtualApiService\FrutosMaipo.Feria.Service\obj\Debug\netcoreapp2.1\FrutosMaipo.Feria.Service.dll
 D:\Proyectos VS\Portafolio-FeriaVirtual\feriaVirtualApiService\FrutosMaipo.Feria.Service\obj\Debug\netcoreapp2.1\FrutosMaipo.Feria.Service.pdb
+C:\portafolio\feriaVirtualApiService\feriaVirtualApiService\FrutosMaipo.Feria.Service\bin\Debug\netcoreapp2.1\appsettings.Development.json
+C:\portafolio\feriaVirtualApiService\feriaVirtualApiService\FrutosMaipo.Feria.Service\bin\Debug\netcoreapp2.1\appsettings.json
+C:\portafolio\feriaVirtualApiService\feriaVirtualApiService\FrutosMaipo.Feria.Service\bin\Debug\netcoreapp2.1\Properties\launchSettings.json
+C:\portafolio\feriaVirtualApiService\feriaVirtualApiService\FrutosMaipo.Feria.Service\bin\Debug\netcoreapp2.1\FrutosMaipo.Feria.Service.deps.json
+C:\portafolio\feriaVirtualApiService\feriaVirtualApiService\FrutosMaipo.Feria.Service\bin\Debug\netcoreapp2.1\FrutosMaipo.Feria.Service.runtimeconfig.json
+C:\portafolio\feriaVirtualApiService\feriaVirtualApiService\FrutosMaipo.Feria.Service\bin\Debug\netcoreapp2.1\FrutosMaipo.Feria.Service.runtimeconfig.dev.json
+C:\portafolio\feriaVirtualApiService\feriaVirtualApiService\FrutosMaipo.Feria.Service\bin\Debug\netcoreapp2.1\FrutosMaipo.Feria.Service.dll
+C:\portafolio\feriaVirtualApiService\feriaVirtualApiService\FrutosMaipo.Feria.Service\bin\Debug\netcoreapp2.1\FrutosMaipo.Feria.Service.pdb
+C:\portafolio\feriaVirtualApiService\feriaVirtualApiService\FrutosMaipo.Feria.Service\obj\Debug\netcoreapp2.1\FrutosMaipo.Feria.Service.RazorAssemblyInfo.cache
+C:\portafolio\feriaVirtualApiService\feriaVirtualApiService\FrutosMaipo.Feria.Service\obj\Debug\netcoreapp2.1\FrutosMaipo.Feria.Service.RazorAssemblyInfo.cs
+C:\portafolio\feriaVirtualApiService\feriaVirtualApiService\FrutosMaipo.Feria.Service\obj\Debug\netcoreapp2.1\FrutosMaipo.Feria.Service.AssemblyInfoInputs.cache
+C:\portafolio\feriaVirtualApiService\feriaVirtualApiService\FrutosMaipo.Feria.Service\obj\Debug\netcoreapp2.1\FrutosMaipo.Feria.Service.AssemblyInfo.cs
+C:\portafolio\feriaVirtualApiService\feriaVirtualApiService\FrutosMaipo.Feria.Service\obj\Debug\netcoreapp2.1\FrutosMaipo.Feria.Service.RazorTargetAssemblyInfo.cache
+C:\portafolio\feriaVirtualApiService\feriaVirtualApiService\FrutosMaipo.Feria.Service\obj\Debug\netcoreapp2.1\FrutosMaipo.Feria.Service.dll
+C:\portafolio\feriaVirtualApiService\feriaVirtualApiService\FrutosMaipo.Feria.Service\obj\Debug\netcoreapp2.1\FrutosMaipo.Feria.Service.pdb
