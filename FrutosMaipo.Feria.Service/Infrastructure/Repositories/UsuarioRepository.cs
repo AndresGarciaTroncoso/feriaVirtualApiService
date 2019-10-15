@@ -18,6 +18,25 @@ namespace FrutosMaipo.Feria.Service.Infrastructure.Repositories
             _context = context;
         }
 
+        public async Task<bool> ActualizarUsuario(Auth0UserModel usuario)
+        {
+            try
+            {
+                Usuario usuarioEntity = await _context.Usuario.FirstOrDefaultAsync(a => a.Rut == usuario.Rut);
+                usuarioEntity.NombreCompleto = usuario.NombreCompleto;
+
+                if (usuario.Rol == 2)
+                {
+                    Contrato contratoEntity = await _context.Contrato.FirstOrDefaultAsync(a => a.Productor == usuario.Rut);
+                    contratoEntity.FechaInicioContrato = DateTime.Now;
+                    contratoEntity.FechaActualContrato = DateTime.Now;
+                    contratoEntity.FechaTerminoContrato = usuario.FechaTerminoContrato;
+                }
+                return await _context.SaveChangesAsync() > 0 ? true : false;
+            }
+            catch (Exception) { return false; }
+        }
+
         public async Task<bool> CrearUsuarioDB(Auth0UserModel usuario)
         {
             Usuario nuevoUsuario = new Usuario();
@@ -28,11 +47,23 @@ namespace FrutosMaipo.Feria.Service.Infrastructure.Repositories
             nuevoUsuario.Vigencia = usuario.Vigencia;
             nuevoUsuario.Rol = usuario.Rol;
             await _context.Usuario.AddAsync(nuevoUsuario);
-            return await _context.SaveChangesAsync() > 0 ? true : false;
+            if (usuario.Rol == 2)
+            {
+                Contrato nuevoContrato = new Contrato();
+                nuevoContrato.Productor = usuario.Rut;
+                nuevoContrato.FechaInicioContrato = DateTime.Now;
+                nuevoContrato.FechaActualContrato = DateTime.Now;
+                nuevoContrato.FechaTerminoContrato = usuario.FechaTerminoContrato;
+                nuevoContrato.Vigencia = usuario.Vigencia;
+                await _context.Contrato.AddAsync(nuevoContrato);
+                return await _context.SaveChangesAsync() > 0 ? true : false;
+            }
+            else
+                return await _context.SaveChangesAsync() > 0 ? true : false;
         }
 
         public async Task<UsuarioModel> DetalleUsuarioPorId(int idUsuario)
-        {
+        {                                                                                                                                                   
             UsuarioModel usuario = null;
             try
             {
@@ -48,7 +79,30 @@ namespace FrutosMaipo.Feria.Service.Infrastructure.Repositories
                         Email = usuarioEntity.Email,
                         Vigencia = usuarioEntity.Vigencia,
                     };
-                    return usuario;
+                    if (usuario.Rol == 2)
+                    {
+                        Contrato contratoEntity = await _context.Contrato.FirstOrDefaultAsync(a => a.Productor == idUsuario);
+                        if(contratoEntity != null)
+                        {
+                            usuario.Contrato = new ContratoModel
+                            {
+                                FechaInicioContrato = contratoEntity.FechaInicioContrato,
+                                FechaTerminoContrato = contratoEntity.FechaTerminoContrato,
+                                Vigencia = contratoEntity.Vigencia
+                            };
+                            contratoEntity.FechaActualContrato = DateTime.Now;
+                            if(contratoEntity.FechaActualContrato > contratoEntity.FechaActualContrato)
+                            {
+                                contratoEntity.Vigencia = "0";
+                            }
+                            await _context.SaveChangesAsync();
+                            return usuario;
+                        }
+                        else
+                            return null;
+                    }else
+                        return usuario;
+
                 }
                 else { return usuario; }
 
@@ -158,6 +212,48 @@ namespace FrutosMaipo.Feria.Service.Infrastructure.Repositories
             {
                 var e = ex.Message;
                 throw;
+            }
+        }
+
+        public async Task<IList<UsuarioModel>> ObtenerUsuarios()
+        {
+            IList<UsuarioModel> usuarioList = new List<UsuarioModel>();
+            UsuarioModel usuarioModel = null;
+            ContratoModel contratoModel = null;
+            try
+            {
+                var usuarioResult = await _context.Usuario.ToListAsync();
+                foreach (var item in usuarioResult)
+                {
+                    var rolResult = await _context.Rol.FirstOrDefaultAsync(a => a.IdRol == item.Rol);
+                    usuarioModel = new UsuarioModel()
+                    {
+                        Rut = item.Rut,
+                        NombreCompleto = item.NombreCompleto,
+                        Email = item.Email,
+                        RolDescripcion = rolResult.Descripcion,
+                        Vigencia = item.Vigencia                       
+                    };
+                    if (item.Rol == 2)
+                    {
+                        var contratoResult = await _context.Contrato.FirstOrDefaultAsync(a => a.Productor == item.Rut);
+
+                        contratoModel = new ContratoModel()
+                        {
+                            FechaInicioContrato = contratoResult.FechaInicioContrato,
+                            FechaActualContrato = contratoResult.FechaActualContrato,
+                            FechaTerminoContrato = contratoResult.FechaTerminoContrato,
+                            Vigencia = contratoResult.Vigencia
+                        };
+                        usuarioModel.Contrato = contratoModel;
+                    }
+                    usuarioList.Add(usuarioModel);
+                }
+                return usuarioList;
+            }
+            catch (Exception ex)
+            {
+                return null;
             }
         }
     }

@@ -49,6 +49,8 @@ namespace FrutosMaipo.Feria.Service.Infrastructure.Entities
             {
                 entity.HasKey(e => e.IdContrato);
 
+                entity.Property(e => e.FechaActualContrato).HasColumnType("date");
+
                 entity.Property(e => e.FechaInicioContrato).HasColumnType("date");
 
                 entity.Property(e => e.FechaTerminoContrato).HasColumnType("date");

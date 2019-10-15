@@ -77,6 +77,22 @@ namespace FrutosMaipo.Feria.Service.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("GetAll")]
+        [ProducesResponseType(typeof(ClienteModel), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetAll()
+        {
+            IList<UsuarioModel> usuarioList = await _usuarioRepository.ObtenerUsuarios();
+            if (usuarioList != null)
+            {
+                return Ok(usuarioList);
+            }
+            else
+            {
+                return BadRequest(false);
+            }
+        }
+
         [HttpPost]
         [Route("CreateUser")]  
         public async Task<IActionResult> CreateUser([FromBody] Auth0UserModel UserAdd)
@@ -93,6 +109,21 @@ namespace FrutosMaipo.Feria.Service.Controllers
             }
             else
                 return Ok(false);
+        }
+
+        [HttpPost]
+        [Route("Update")]
+        [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> ActualizarUsuario([FromBody] Auth0UserModel usuario)
+        {
+            if (await _usuarioRepository.ActualizarUsuario(usuario) != false)
+            {
+                return Ok(true);
+            }
+            else
+            {
+                return BadRequest(false);
+            }
         }
     }
 }

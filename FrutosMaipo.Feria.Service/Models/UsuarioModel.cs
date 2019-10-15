@@ -13,10 +13,18 @@ namespace FrutosMaipo.Feria.Service.Models
         public string NombreCompleto { get; set; }
         public string Email { get; set; }
         public string Vigencia { get; set; }
-        public int? Contrato { get; set; }
+        public ContratoModel Contrato { get; set; }
         public int? Rol { get; set; }
-        
-        //public ICollection<Solicitud> Solicitud { get; set; }
+        public string RolDescripcion { get; set; }
+    }
 
+    public class ContratoModel
+    {
+        public int IdContrato { get; set; }
+        public int? Productor { get; set; }
+        public DateTime? FechaInicioContrato { get; set; }
+        public DateTime? FechaActualContrato { get; set; }
+        public DateTime? FechaTerminoContrato { get; set; }
+        public string Vigencia { get; set; }
     }
 }
