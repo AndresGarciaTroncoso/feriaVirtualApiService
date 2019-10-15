@@ -36,9 +36,11 @@ namespace FrutosMaipo.Feria.Service
             //services.AddHttpClient<IWeatherService, WeatherService>();
             services.AddTransient<IUsuarioRepository, UsuarioRepository>();
             services.AddTransient<IProductoRepository, ProductoRepository>();
+            services.AddTransient<ISendEmailService, SendEmailService>();
 
             services.AddHttpClient<IAuthUserManangementServices, AuthUserManagementService>();
             services.Configure<Auth0ManagementApiConfig>(Configuration.GetSection("Auth0"));
+            services.Configure<SendEmailConfig>(Configuration.GetSection("SendEmail"));
             //services.Configure<WeatherApiConfig>(Configuration.GetSection("WeatherApiService"));
 
             services.AddCors(options =>
