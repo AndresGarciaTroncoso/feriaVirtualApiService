@@ -9,7 +9,6 @@ namespace FrutosMaipo.Feria.Service.Infrastructure.Entities
         {
             Contrato = new HashSet<Contrato>();
             Pedido = new HashSet<Pedido>();
-            Transporte = new HashSet<Transporte>();
         }
 
         public int Rut { get; set; }
@@ -22,6 +21,5 @@ namespace FrutosMaipo.Feria.Service.Infrastructure.Entities
         public Rol RolNavigation { get; set; }
         public ICollection<Contrato> Contrato { get; set; }
         public ICollection<Pedido> Pedido { get; set; }
-        public ICollection<Transporte> Transporte { get; set; }
     }
 }

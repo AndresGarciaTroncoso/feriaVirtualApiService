@@ -24,6 +24,7 @@ namespace FrutosMaipo.Feria.Service.Infrastructure.Entities
         public virtual DbSet<ProcesoVenta> ProcesoVenta { get; set; }
         public virtual DbSet<Producto> Producto { get; set; }
         public virtual DbSet<ProductoPedido> ProductoPedido { get; set; }
+        public virtual DbSet<RequisitoTransporte> RequisitoTransporte { get; set; }
         public virtual DbSet<Rol> Rol { get; set; }
         public virtual DbSet<Subasta> Subasta { get; set; }
         public virtual DbSet<SubastaTransporte> SubastaTransporte { get; set; }
@@ -182,6 +183,20 @@ namespace FrutosMaipo.Feria.Service.Infrastructure.Entities
                     .HasConstraintName("FK_ProductoPedido_Producto");
             });
 
+            modelBuilder.Entity<RequisitoTransporte>(entity =>
+            {
+                entity.HasKey(e => e.IdRequisito);
+
+                entity.Property(e => e.IdRequisito).ValueGeneratedNever();
+
+                entity.Property(e => e.Refigeracion).HasMaxLength(10);
+
+                entity.HasOne(d => d.SubastaNavigation)
+                    .WithMany(p => p.RequisitoTransporte)
+                    .HasForeignKey(d => d.Subasta)
+                    .HasConstraintName("FK_RequisitoTransporte_SubastaTransporte");
+            });
+
             modelBuilder.Entity<Rol>(entity =>
             {
                 entity.HasKey(e => e.IdRol);
@@ -213,8 +228,6 @@ namespace FrutosMaipo.Feria.Service.Infrastructure.Entities
                 entity.HasKey(e => e.IdSubasta);
 
                 entity.Property(e => e.IdSubasta).ValueGeneratedNever();
-
-                entity.Property(e => e.Seleccionado).HasMaxLength(10);
 
                 entity.HasOne(d => d.EstadoNavigation)
                     .WithMany(p => p.SubastaTransporte)
@@ -255,10 +268,12 @@ namespace FrutosMaipo.Feria.Service.Infrastructure.Entities
 
                 entity.Property(e => e.Refrigeracion).HasMaxLength(10);
 
-                entity.HasOne(d => d.TransportistaNavigation)
+                entity.Property(e => e.Seleccionado).HasMaxLength(10);
+
+                entity.HasOne(d => d.SubastaNavigation)
                     .WithMany(p => p.Transporte)
-                    .HasForeignKey(d => d.Transportista)
-                    .HasConstraintName("FK_Transporte_Usuario");
+                    .HasForeignKey(d => d.Subasta)
+                    .HasConstraintName("FK_Transporte_SubastaTransporte");
             });
 
             modelBuilder.Entity<Transportista>(entity =>
